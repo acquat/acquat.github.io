@@ -68,6 +68,7 @@ a:hover { color: var(--link-hov); text-decoration: underline; }
   font-size: 1.95rem;
   font-weight: 650;
   letter-spacing: -0.01em;
+  color: var(--link);
 }
 
 .intro .title {
@@ -96,10 +97,11 @@ a:hover { color: var(--link-hov); text-decoration: underline; }
   padding: 12px 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  justify-content: space-between;
+  gap: 10px 18px;
   font-size: 0.92rem;
 }
-.nav a { color: var(--muted); font-weight: 550; }
+.nav a { color: #8a8a8a; font-weight: 400; }
 .nav a:hover { color: var(--link); text-decoration: none; }
 
 /* ===== Sections ===== */
@@ -107,8 +109,11 @@ section { margin-top: 34px; }
 #about { margin-top: 26px; }
 
 section h2 {
-  font-size: 1.18rem;
+  font-size: 1.22rem;
   font-weight: 650;
+  color: #2f4a63;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
   margin: 0 0 14px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--rule);
