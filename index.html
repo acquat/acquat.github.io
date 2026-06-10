@@ -189,9 +189,59 @@
     </main>
 
     <footer>
-      <p>&copy; 2026 Angelique Acquatella</p>
+      <p>&copy; 2026 Angelique Acquatella &middot;
+        <a href="privacy.html">Privacy &amp; cookies</a> &middot;
+        <a href="#" id="cookie-manage">Cookie preferences</a></p>
     </footer>
 
   </div>
+
+  <!-- ===== Cookie consent + Google Analytics 4 ===== -->
+  <div id="cookie-banner" class="cookie-banner" hidden>
+    <p>This site uses <strong>Google Analytics</strong> to measure visits. Analytics cookies are set only if you accept. See the <a href="privacy.html">privacy &amp; cookies</a> note.</p>
+    <div class="cookie-actions">
+      <button id="cookie-accept" type="button">Accept</button>
+      <button id="cookie-reject" type="button">Reject</button>
+    </div>
+  </div>
+  <script>
+  (function () {
+    // GA4 Measurement ID (angieacquatella.com web data stream)
+    var GA_ID = "G-L3SZ8V5S2E";
+    var KEY = "analytics-consent";
+    var banner = document.getElementById("cookie-banner");
+
+    function loadGA() {
+      if (!GA_ID || GA_ID.indexOf("G-") !== 0) return;
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", GA_ID);
+    }
+
+    function setConsent(v) {
+      try { localStorage.setItem(KEY, v); } catch (e) {}
+      if (banner) banner.hidden = true;
+      if (v === "granted") loadGA();
+    }
+
+    var stored = null;
+    try { stored = localStorage.getItem(KEY); } catch (e) {}
+    if (stored === "granted") { loadGA(); }
+    else if (stored !== "denied" && banner) { banner.hidden = false; } // first visit: ask
+
+    var a = document.getElementById("cookie-accept");
+    var r = document.getElementById("cookie-reject");
+    if (a) a.addEventListener("click", function () { setConsent("granted"); });
+    if (r) r.addEventListener("click", function () { setConsent("denied"); });
+    var m = document.getElementById("cookie-manage");
+    if (m) m.addEventListener("click", function (e) { e.preventDefault(); if (banner) banner.hidden = false; });
+  })();
+  </script>
 </body>
 </html>
