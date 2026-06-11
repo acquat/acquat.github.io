@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Tools for Academic Work — Angelique Acquatella</title>
+  <meta name="description" content="Open-source Claude Code configurations for academic work: research writing, empirical coding, teaching, and administration. By Angelique Acquatella (TSE). MIT-licensed.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* page-specific: code + workflow list */
+    pre { background:#f6f8fa; border:1px solid var(--rule); border-radius:6px;
+          padding:14px 16px; overflow-x:auto; font-size:0.86rem; line-height:1.5; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+           font-size:0.9em; background:#f1f3f5; padding:1px 5px; border-radius:4px; }
+    pre code { background:none; padding:0; }
+    .lead { font-size:1.05rem; color:#333; }
+    .callout { border-left:3px solid var(--link); background:#f3f7fa;
+               padding:12px 16px; margin:18px 0; border-radius:0 6px 6px 0; font-size:0.97rem; }
+    .repo-btn { display:inline-block; margin:4px 12px 4px 0; padding:9px 18px;
+                background:var(--link); color:#fff !important; border-radius:6px;
+                font-weight:550; font-size:0.95rem; }
+    .repo-btn:hover { background:var(--link-hov); text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ===== Nav ===== -->
+    <nav class="nav">
+      <a href="index.html">&larr; Angelique Acquatella</a>
+      <span>
+        <a href="#get">Download</a>
+      </span>
+    </nav>
+
+    <main>
+
+      <section id="about" style="margin-top:26px;">
+        <h1 style="color:var(--link); font-size:1.95rem; font-weight:650; margin:0 0 10px;">AI Tools for Academic Work</h1>
+        <p class="lead">Here are some AI tools that have been very helpful to me as an academic, which may be helpful to others! Beyond the now-widespread uses on coding and writing, these tools can help on things specific to academic administration work (e.g. filing for reimbursements following the specifics of your institutional policies, or updating your CV from your own records). If you find bugs or have suggestions on how to improve these tools, don't hesitate to reach out!</p>
+        <p class="lead">The main thing I found myself needing to build into these tools is <strong>rigor</strong>. What that means in practice looks different across tasks:</p>
+        <ul class="teaching">
+          <li><strong>Citing literature</strong> — the agent may not cite a paper it hasn't actually read; every reference is verified to exist, or flagged for you to check; everything it reads goes into a running log, so future sessions build on the same body of knowledge.</li>
+          <li><strong>Coding</strong> — scripts are read end-to-end and audited for internal consistency; Stata syntax is verified against the official manuals <em>before</em> writing; and for data work in secure-enclave environments, queries are written to avoid wasting scarce computing resources.</li>
+          <li><strong>Administrative work</strong> — the agent internalizes your institution's actual policy document and checks every claim against it, rule by rule, deadline by deadline.</li>
+          <li><strong>And when it's unsure, it asks</strong> — ambiguity is flagged back to the user instead of resolved independently.</li>
+        </ul>
+        <p class="lead">Note: None of these tools are designed to be token-efficient; rather, these workflows are designed to be <em>conservative and meticulous</em>, which in my experience is exactly what cuts down the frustrating iteration loops with AI tools.</p>
+        <p>
+          <a class="repo-btn" href="https://github.com/acquat/claude-academic-workflows">View on GitHub</a>
+          <a class="repo-btn" href="https://github.com/acquat/claude-academic-workflows#quickstart" style="background:#fff; color:var(--link) !important; border:1px solid var(--link);">Quickstart</a>
+        </p>
+      </section>
+
+      <!-- ===== Workflows ===== -->
+      <section id="workflows">
+        <h2>The Five Workflows</h2>
+        <ul class="pubs">
+          <li>
+            <span class="pub-title">Administrative</span>
+            <span class="pub-meta">Reimbursements, receipts, and updating CV/bio.</span>
+            <details class="abstract"><summary>What's inside</summary>
+              <p><code>/ingest-policy</code> reads your institution's reimbursement-policy PDF and generates a rule-by-rule compliance rulebook (portable across institutions). <code>/update-document</code> updates a CV/bio based on activity on your computer — e.g. a referee report for a new journal prompts you to add the journal under your Refereeing Service section. Specialist agents classify receipts, fill the claim form, review it against policy, and triage deadlines.</p>
+            </details>
+          </li>
+          <li>
+            <span class="pub-title">Academic Writing</span>
+            <span class="pub-meta">Construct a body of knowledge based on the relevant literature, appropriately cite relevant authors and find relevant papers (via the paired lit-review skill — see Resources), and position papers within the literature.</span>
+            <details class="abstract"><summary>What's inside</summary>
+              <p>Hard rules for rigor: <em>no-fabrication</em> (every claim verified against its source, with a mechanical self-check), <em>lit-review-protocol</em> (every paper read is logged before it&rsquo;s cited), and <em>replication-protocol</em> (reproduce published results before extending). Plus a notation-registry convention for theory papers.</p>
+            </details>
+          </li>
+          <li>
+            <span class="pub-title">Coding with SNDS</span>
+            <span class="pub-meta">Analysis in the French SNDS secure health-data enclave (SAS/Oracle + R).</span>
+            <details class="abstract"><summary>What's inside</summary>
+              <p>SAS/SQL conventions (partition keys, composite joins, safe-replace), and DUA-compliant confidentiality: statistical-disclosure-control and export-compliance rules, a <code>sas-reviewer</code> agent, and a <code>/sds-doc</code> lookup against the authoritative SNDS documentation.</p>
+            </details>
+          </li>
+          <li>
+            <span class="pub-title">Coding with Stata</span>
+            <span class="pub-meta">General empirical analysis in Stata (+ R for figures).</span>
+            <details class="abstract"><summary>What's inside</summary>
+              <p>Do-file conventions, a <code>stata-reviewer</code> agent, and <code>/stata-syntax</code> — which verifies command syntax against the manuals <em>before</em> writing, because a syntax error wastes a run.</p>
+            </details>
+          </li>
+          <li>
+            <span class="pub-title">Teaching</span>
+            <span class="pub-meta">Pedagogy-oriented tools to keep track of project supervision, problem set design, and reading lists.</span>
+            <details class="abstract"><summary>What's inside</summary>
+              <p><code>/supervise-project</code> (flags the advisor to check in with the student, and tracks feedback given/content reviewed), <code>/tf-builder</code> (teaching-fellow problem sets, with solutions in a separate file), and <code>/reading-list</code> (curated, citations verified or flagged).</p>
+            </details>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ===== How it works ===== -->
+      <section id="how">
+        <h2>How It Works</h2>
+        <p><strong>Workflows</strong> are self-contained <code>.claude/</code> configs that bundle their instructions, rules, hooks, and — where their skills need them — specialist agents. Two cross-cutting <strong>rigor skills</strong> back them: <code>/rigor</code> (never fabricate parameters; cite or stop — auto-loaded every session, in every workflow) and <code>/empirical-coding-discipline</code> (audit every step; verify units and identifiers — used by the coding and writing workflows). A shared working discipline rides in every workflow: plan first, verify after, 80/90/95 quality gates, session logging. For the general academic layer these pair with — lecture production, literature review, generic paper review — see the resources below.</p>
+        <pre><code># 1. make the shared skills available (once per machine)
+cp -R skills/* ~/.claude/skills/
+
+# 2. drop a workflow into a project
+cp -R workflows/academic-writing-workflow/.claude /path/to/project/.claude
+#    then open Claude Code and fill the [YOUR …] placeholders</code></pre>
+        <p class="note">Nothing assumes git or Quarto; the templates are LaTeX/Beamer + R/SAS/Stata oriented. Full steps are in the repo's <code>INSTALL.md</code>.</p>
+      </section>
+
+      <!-- ===== Get it ===== -->
+      <section id="get">
+        <h2>Download</h2>
+        <p>The repository is available on GitHub —</p>
+        <p><a class="repo-btn" href="https://github.com/acquat/claude-academic-workflows">github.com/acquat/claude-academic-workflows</a></p>
+        <p>Everything here runs on Anthropic's <a href="https://docs.claude.com/en/docs/claude-code">Claude Code</a>. Codex version coming soon!</p>
+        <p class="note">Found it useful, or improved something? I'd love to hear about it!</p>
+      </section>
+
+      <!-- ===== Other helpful resources ===== -->
+      <section id="credits">
+        <h2>Other Helpful Resources</h2>
+        <p>Many great AI tools are being built by academics, for academics — these are the ones I use and recommend:</p>
+        <ul class="teaching">
+          <li><a href="https://github.com/pedrohcgs/claude-code-my-workflow"><strong>claude-code-my-workflow</strong></a> — Pedro Sant'Anna's comprehensive academic foundation (slides, lit review, paper review, data analysis). My own setup grew out of this kit, and these workflows are designed to install alongside it. In particular, <strong>download his <a href="https://github.com/pedrohcgs/claude-code-my-workflow/tree/main/.claude/skills/lit-review"><code>/lit-review</code></a> skill to use with my academic-writing workflow</strong>: his skill searches and synthesizes the literature, while my logging rule makes sure every paper it reads is recorded — with the pages read and the load-bearing claims — before it can be cited. They pair naturally.</li>
+          <li><a href="https://github.com/dylantmoore/stata-skill"><strong>stata-skill</strong></a> — Dylan Moore's Stata reference skill; a complementary approach to the same "Claude can't run Stata" problem.</li>
+          <li><a href="https://github.com/jusi-aalto/strategic-revision"><strong>strategic-revision</strong></a> — a super useful revision planner for revise-and-resubmits, by GitHub user <code>jusi-aalto</code>.</li>
+          <li><a href="https://gist.github.com/michaelewens/9a1bc5a97f3f9bbb79453e5b682df462"><strong>"Automatic" logging in Claude Code</strong></a> — Michael Ewens' session-logging hook.</li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Angelique Acquatella &middot;
+        <a href="privacy.html">Privacy &amp; cookies</a> &middot;
+        <a href="#" id="cookie-manage">Cookie preferences</a></p>
+    </footer>
+
+  </div>
+
+  <!-- ===== Cookie consent + Google Analytics 4 (same as homepage) ===== -->
+  <div id="cookie-banner" class="cookie-banner" hidden>
+    <p>This site uses <strong>Google Analytics</strong> to measure visits. Analytics cookies are set only if you accept. See the <a href="privacy.html">privacy &amp; cookies</a> note.</p>
+    <div class="cookie-actions">
+      <button id="cookie-accept" type="button">Accept</button>
+      <button id="cookie-reject" type="button">Reject</button>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var GA_ID = "G-L3SZ8V5S2E";
+    var KEY = "analytics-consent";
+    var banner = document.getElementById("cookie-banner");
+    function loadGA() {
+      if (!GA_ID || GA_ID.indexOf("G-") !== 0) return;
+      var s = document.createElement("script");
+      s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag; gtag("js", new Date()); gtag("config", GA_ID);
+    }
+    function setConsent(v) {
+      try { localStorage.setItem(KEY, v); } catch (e) {}
+      if (banner) banner.hidden = true;
+      if (v === "granted") loadGA();
+    }
+    var stored = null;
+    try { stored = localStorage.getItem(KEY); } catch (e) {}
+    if (stored === "granted") { loadGA(); }
+    else if (stored !== "denied" && banner) { banner.hidden = false; }
+    var a = document.getElementById("cookie-accept");
+    var r = document.getElementById("cookie-reject");
+    if (a) a.addEventListener("click", function () { setConsent("granted"); });
+    if (r) r.addEventListener("click", function () { setConsent("denied"); });
+    var m = document.getElementById("cookie-manage");
+    if (m) m.addEventListener("click", function (e) { e.preventDefault(); if (banner) banner.hidden = false; });
+  })();
+  </script>
+</body>
+</html>
